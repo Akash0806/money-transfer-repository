@@ -4,9 +4,17 @@ import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.moneytransfer.constants.MoneyTransferConstant;
 import com.moneytransfer.exception.handler.JsonTransformer;
+import com.moneytransfer.model.error.APIError;
 import com.moneytransfer.model.request.AccountRequest;
+import com.moneytransfer.model.response.AccountResponse;
+import com.moneytransfer.model.response.TransferResponse;
 import com.moneytransfer.services.AccountService;
+import io.swagger.annotations.*;
 import org.eclipse.jetty.http.HttpStatus;
+
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -17,6 +25,9 @@ import static spark.Spark.post;
  *
  *
  */
+@Api
+@Path(MoneyTransferConstant.V_1_ACCOUNT)
+@Produces("application/json")
 public class AccountRoutes {
 
 	@Inject
@@ -25,7 +36,18 @@ public class AccountRoutes {
 	public AccountRoutes() {
 		initializeAccountRoutes();
 	}
-
+	@POST
+	@ApiOperation(value = "Add Account", nickname="Create Account")
+	@ApiImplicitParams({ //
+			@ApiImplicitParam(required = true, dataType = "com.moneytransfer.model.request.AccountRequest", paramType = "body") //
+	}) //
+	@ApiResponses(value = { //
+			@ApiResponse(code = 201, message = "Success", response= AccountResponse.class), //
+			@ApiResponse(code = 400, message = "Account balance can't be negative at open", response= APIError.class), //
+			@ApiResponse(code = 400, message = "Account type should be Checking or Savings", response=APIError.class), //
+			@ApiResponse(code = 400, message = "BAD Request", response=APIError.class), //
+	    	@ApiResponse(code = 500, message = "Internal Server Error", response=APIError.class) //
+	})
 	public void initializeAccountRoutes() {
 
 		post(MoneyTransferConstant.V_1_ACCOUNT + "/add", (request, response) -> {
