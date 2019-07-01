@@ -11,7 +11,7 @@ unit and integration test with concurrency.
 How start the application
 ===========
 
-- Clone the project from repo at git clone https://github.com/Akash0806/money-transfer-repo
+- Clone the project from repo at git clone https://github.com/Akash0806/money-transfer-repository
 - Navigate to source root folder ``
 - Execute `./mvnw clean package`. This will create the fat jar at `/target` folder.
 - Navigate to `/target` folder and execute
