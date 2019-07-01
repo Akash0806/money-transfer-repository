@@ -72,7 +72,34 @@ API Details
 ===========
 Swagger - Json documentation
 http://localhost:4567/swagger
+##Account##
+**Add a new user** - ```POST``` - ```http://localhost:4567/v1/account/add```
 
+**Fetch all account details** - ```GET``` -
+```http://localhost:4567/v1/account/all```
+
+**Fetch details on a single account** - ```GET``` -
+```http://localhost:4567/v1/account/100000```
+
+**Make a deposit** - ```POST``` -
+```http://localhost:4567/v1/account/deposit```
+ 
+**Make a withdraw** - ```POST``` -
+```http://localhost:4567/v1/account/withdraw```
+
+Exmaple -
+http://localhost:4567/v1/account/add
+Header -
+Accept:application/json
+Content-Type:application/json
+body -
+{
+  "accountNumber": "1234",
+  "alias": "xyz",
+  "type": "Savings",
+  "amount": "100",
+  "currency": "USD"
+}
 
 
 
@@ -81,6 +108,17 @@ http://localhost:4567/swagger
 **Make a transfer** - ```POST``` -
 ```http://localhost:4567/v1/transfer/immediate```
 
+Example
+Header -
+Accept:application/json
+Content-Type:application/json
+body 
+{
+  "fromAccount": "100003",
+  "toAccount": "100004",
+  "amount": "1000",
+  "currency": "USD"
+}
 
 **Get details from an existing transfer** - ```GET``` -
 ```http://localhost:4567/v1/transfer/10000002```
